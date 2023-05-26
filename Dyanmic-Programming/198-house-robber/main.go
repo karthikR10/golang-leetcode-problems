@@ -8,8 +8,6 @@
 
 // Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
 
- 
-
 // Example 1:
 
 // Input: nums = [1,2,3,1]
@@ -22,9 +20,36 @@
 // Output: 12
 // Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
 // Total amount you can rob = 2 + 9 + 1 = 12.
- 
 
 // Constraints:
 
 // 1 <= nums.length <= 100
 // 0 <= nums[i] <= 400
+
+package main
+
+import "fmt"
+
+func rob(nums []int) int {
+	rob1, rob2 := 0, 0
+
+	// [rob1, rob2, n, n+1,.....]
+	for i := 0; i < len(nums); i++ {
+		temp := max(nums[i]+rob1, rob2)
+		rob1 = rob2
+		rob2 = temp
+	}
+	return rob2
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func main() {
+	nums := []int{1, 2, 3, 1}
+	fmt.Println(rob(nums))
+}
